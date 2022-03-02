@@ -99,17 +99,49 @@ class GazeTracking(object):
     def is_right(self):
         """Returns true if the user is looking to the right"""
         if self.pupils_located:
-            return self.horizontal_ratio() <= 0.35
+            return self.horizontal_ratio() <= 0.35 and self.is_upright() is not True and self.is_downright() is not True
 
     def is_left(self):
         """Returns true if the user is looking to the left"""
         if self.pupils_located:
-            return self.horizontal_ratio() >= 0.65
+            return self.horizontal_ratio() >= 0.65 and self.is_upleft() is not True and self.is_downleft() is not True
 
     def is_center(self):
         """Returns true if the user is looking to the center"""
         if self.pupils_located:
-            return self.is_right() is not True and self.is_left() is not True
+            return self.is_right() is not True and self.is_left() is not True and self.is_up() is not True and\
+                   self.is_down() is not True and self.is_upleft() is not True and self.is_upright() is not True and\
+                   self.is_downleft() is not True and self.is_downright() is not True
+
+    def is_up(self):
+        """Returns true if the user is looking up"""
+        if self.pupils_located:
+            return self.vertical_ratio() <= 0.65 and self.is_upleft() is not True and self.is_upright() is not True
+
+    def is_down(self):
+        """Returns true if the user is looking down"""
+        if self.pupils_located:
+            return self.vertical_ratio() >= 0.90 and self.is_downleft() is not True and self.is_downright() is not True
+
+    def is_upleft(self):
+        """Returns true if the user is looking up and to the left"""
+        if self.pupils_located:
+            return self.horizontal_ratio() >= 0.65 and self.vertical_ratio() <= 0.65
+
+    def is_upright(self):
+        """Returns true if the user is looking up and to the right"""
+        if self.pupils_located:
+            return self.horizontal_ratio() <= 0.35 and self.vertical_ratio() <= 0.65
+
+    def is_downleft(self):
+        """Returns true if the user is looking down and to the left"""
+        if self.pupils_located:
+            return self.horizontal_ratio() >= 0.65 and self.vertical_ratio() >= 0.90
+
+    def is_downright(self):
+        """Returns true if the user is looking down and to the right"""
+        if self.pupils_located:
+            return self.horizontal_ratio() <= 0.35 and self.vertical_ratio() >= 0.90
 
     def is_blinking(self):
         """Returns true if the user closes his eyes"""
