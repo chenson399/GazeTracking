@@ -253,28 +253,28 @@ class two_by_two_GazeTracking(object):
         if self.pupils_located:
             pupil_left = self.eye_left.pupil.y / (self.eye_left.center[1] * 2 - 10)
             pupil_right = self.eye_right.pupil.y / (self.eye_right.center[1] * 2 - 10)
-            print(f"Vertical Ratio: {(pupil_left + pupil_right) / 2}")
+            #print(f"Vertical Ratio: {(pupil_left + pupil_right) / 2}")
             return (pupil_left + pupil_right) / 2
 
     def is_upper_left(self):
         """Returns true if the user is looking to the upper left"""
         if self.pupils_located:
-            return self.horizontal_ratio() >= 0.5 and self.horizontal_ratio() >= 0.6
+            return self.horizontal_ratio() >= 0.5 and self.vertical_ratio() >= 0.7
 
     def is_upper_right(self):
         """Returns true if the user is looking to the upper right"""
         if self.pupils_located:
-            return self.horizontal_ratio() < 0.5 and self.horizontal_ratio() >= 0.6
+            return self.horizontal_ratio() < 0.5 and self.vertical_ratio() >= 0.7
 
     def is_lower_left(self):
         """Returns true if the user is looking to the lower left"""
         if self.pupils_located:
-            return self.horizontal_ratio() >= 0.5 and self.horizontal_ratio() < 0.6
+            return self.horizontal_ratio() >= 0.5 and self.vertical_ratio() < 0.7
 
     def is_lower_right(self):
         """Returns true if the user is looking to the lower right"""
         if self.pupils_located:
-            return self.horizontal_ratio() < 0.5 and self.horizontal_ratio() < 0.6
+            return self.horizontal_ratio() < 0.5 and self.vertical_ratio() < 0.7 and not self.is_lower_left()
 
     def is_blinking(self):
         """Returns true if the user closes his eyes"""
@@ -298,7 +298,7 @@ class two_by_two_GazeTracking(object):
         return frame
 
 
-class four_by_GazeTracking(object):
+class four_by_four_GazeTracking(object):
     """
     This class tracks the user's gaze.
     It provides useful information like the position of the eyes
@@ -387,27 +387,71 @@ class four_by_GazeTracking(object):
             pupil_right = self.eye_right.pupil.y / (self.eye_right.center[1] * 2 - 10)
             return (pupil_left + pupil_right) / 2
 
-    def is_upper_left(self):
+    def is_far_up_far_left(self):
         """Returns true if the user is looking to the upper left"""
         if self.pupils_located:
+            return self.vertical_ratio() <= 0.45 and self.horizontal_ratio() >= 0.75
 
-            return self.horizontal_ratio() >= 0.5 and self.horizontal_ratio() >= 0.6
-
-    def is_upper_right(self):
-        """Returns true if the user is looking to the upper right"""
+    def is_near_up_far_left(self):
         if self.pupils_located:
-            return self.horizontal_ratio() < 0.5 and self.horizontal_ratio() >= 0.6
+            return 0.45 < self.vertical_ratio() <= 0.7 and self.horizontal_ratio() >= 0.75
 
-    def is_lower_left(self):
-        """Returns true if the user is looking to the lower left"""
+    def is_near_down_far_left(self):
         if self.pupils_located:
-            return self.horizontal_ratio() >= 0.5 and self.horizontal_ratio() < 0.6
+            return 0.7 < self.vertical_ratio() <= 0.95 and self.horizontal_ratio() >= 0.75
 
-    def is_lower_right(self):
-        """Returns true if the user is looking to the lower right"""
+    def is_far_down_far_left(self):
         if self.pupils_located:
-            return self.horizontal_ratio() < 0.5 and self.horizontal_ratio() < 0.6
+            return self.vertical_ratio() > 0.95 and self.horizontal_ratio() >= 0.75
 
+    def is_far_up_near_left(self):
+        if self.pupils_located:
+            return self.vertical_ratio() <= 0.45 and 0.75 > self.horizontal_ratio() >= 0.5
+
+    def is_near_up_near_left(self):
+        if self.pupils_located:
+            return 0.45 < self.vertical_ratio() <= 0.7 and 0.75 > self.horizontal_ratio() >= 0.5
+
+    def is_near_down_near_left(self):
+        if self.pupils_located:
+            return 0.7 < self.vertical_ratio() <= 0.95 and 0.75 > self.horizontal_ratio() >= 0.5
+
+    def is_far_down_near_left(self):
+        if self.pupils_located:
+            return self.vertical_ratio() > 0.95 and 0.75 > self.horizontal_ratio() >= 0.5
+
+    def is_far_up_near_right(self):
+        if self.pupils_located:
+            return self.vertical_ratio() <= 0.45 and 0.5 > self.horizontal_ratio() >= 0.25
+
+    def is_near_up_near_right(self):
+        if self.pupils_located:
+            return 0.45 < self.vertical_ratio() <= 0.7 and 0.5 > self.horizontal_ratio() >= 0.25
+
+    def is_near_down_near_right(self):
+        if self.pupils_located:
+            return 0.7 < self.vertical_ratio() <= 0.95 and 0.5 > self.horizontal_ratio() >= 0.25
+
+    def is_far_down_near_right(self):
+        if self.pupils_located:
+            return self.vertical_ratio() > 0.95 and 0.5 > self.horizontal_ratio() >= 0.25
+
+    def is_far_up_far_right(self):
+        if self.pupils_located:
+            return self.vertical_ratio() <= 0.45 and self.horizontal_ratio() < 0.25
+
+    def is_near_up_far_right(self):
+        if self.pupils_located:
+            return 0.45 < self.vertical_ratio() <= 0.7 and self.horizontal_ratio() < 0.25
+
+    def is_near_down_far_right(self):
+        if self.pupils_located:
+            return 0.7 < self.vertical_ratio() <= 0.95 and self.horizontal_ratio() < 0.25
+
+    def is_far_down_far_right(self):
+        if self.pupils_located:
+            return self.vertical_ratio() > 0.95 and self.horizontal_ratio() < 0.25
+        
     def is_blinking(self):
         """Returns true if the user closes his eyes"""
         if self.pupils_located:
