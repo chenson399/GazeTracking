@@ -388,70 +388,85 @@ class four_by_four_GazeTracking(object):
             return (pupil_left + pupil_right) / 2
 
     def is_far_up_far_left(self):
-        """Returns true if the user is looking to the upper left"""
+        """Returns true if the user is looking to the top left corner"""
         if self.pupils_located:
             return self.vertical_ratio() <= 0.45 and self.horizontal_ratio() >= 0.75
 
     def is_near_up_far_left(self):
+        """Returns true if the user is looking slightly up and far left"""
         if self.pupils_located:
             return 0.45 < self.vertical_ratio() <= 0.7 and self.horizontal_ratio() >= 0.75
 
     def is_near_down_far_left(self):
+        """Returns true if the user is looking slightly down and far left"""
         if self.pupils_located:
             return 0.7 < self.vertical_ratio() <= 0.95 and self.horizontal_ratio() >= 0.75
 
     def is_far_down_far_left(self):
+        """Returns true if the user is looking to bottom left corner"""
         if self.pupils_located:
             return self.vertical_ratio() > 0.95 and self.horizontal_ratio() >= 0.75
 
     def is_far_up_near_left(self):
+        """Returns true if the user is looking up and slightly left"""
         if self.pupils_located:
             return self.vertical_ratio() <= 0.45 and 0.75 > self.horizontal_ratio() >= 0.5
 
     def is_near_up_near_left(self):
+        """Returns true if the user is looking slightly up and slightly left"""
         if self.pupils_located:
             return 0.45 < self.vertical_ratio() <= 0.7 and 0.75 > self.horizontal_ratio() >= 0.5
 
     def is_near_down_near_left(self):
+        """Returns true if the user is looking slightly down and slightly left"""
         if self.pupils_located:
             return 0.7 < self.vertical_ratio() <= 0.95 and 0.75 > self.horizontal_ratio() >= 0.5
 
     def is_far_down_near_left(self):
+        """Returns true if the user is looking slightly left and down"""
         if self.pupils_located:
             return self.vertical_ratio() > 0.95 and 0.75 > self.horizontal_ratio() >= 0.5
 
     def is_far_up_near_right(self):
+        """Returns true if the user is looking up and slightly right"""
         if self.pupils_located:
             return self.vertical_ratio() <= 0.45 and 0.5 > self.horizontal_ratio() >= 0.25
 
     def is_near_up_near_right(self):
+        """Returns true if the user is looking slightly up and slightly right"""
         if self.pupils_located:
             return 0.45 < self.vertical_ratio() <= 0.7 and 0.5 > self.horizontal_ratio() >= 0.25
 
     def is_near_down_near_right(self):
+        """Returns true if the user is looking slightly down and slight right"""
         if self.pupils_located:
             return 0.7 < self.vertical_ratio() <= 0.95 and 0.5 > self.horizontal_ratio() >= 0.25
 
     def is_far_down_near_right(self):
+        """Returns true if the user is looking down and slightly right"""
         if self.pupils_located:
             return self.vertical_ratio() > 0.95 and 0.5 > self.horizontal_ratio() >= 0.25
 
     def is_far_up_far_right(self):
+        """Returns true if the user is looking to the top right corner"""
         if self.pupils_located:
             return self.vertical_ratio() <= 0.45 and self.horizontal_ratio() < 0.25
 
     def is_near_up_far_right(self):
+        """Returns true if the user is looking right and slightly up"""
         if self.pupils_located:
             return 0.45 < self.vertical_ratio() <= 0.7 and self.horizontal_ratio() < 0.25
 
     def is_near_down_far_right(self):
+        """Returns true if the user is looking right and slightly down"""
         if self.pupils_located:
             return 0.7 < self.vertical_ratio() <= 0.95 and self.horizontal_ratio() < 0.25
 
     def is_far_down_far_right(self):
+        """Returns true if the user is looking to the bottom right corner"""
         if self.pupils_located:
             return self.vertical_ratio() > 0.95 and self.horizontal_ratio() < 0.25
-        
+
     def is_blinking(self):
         """Returns true if the user closes his eyes"""
         if self.pupils_located:
